@@ -11,21 +11,28 @@ namespace PictureGeneticAlgorithm
         static void Main(string[] args)
         {
             rand = new Random();
-
+            string numberFmt= "00";
             string baseImageLocation = @"C:\Users\Thomas\Pictures\geneticTarget.bmp";
             string saveImageLocationFormat = @"C:\Users\Thomas\Pictures\geneticResult{0}.bmp";
             Bitmap target = new Bitmap(baseImageLocation);
             Bitmap bestGuess = new Bitmap(target.Width, target.Height);
+            for(int x = 0; x < bestGuess.Width; x++)
+            {
+                for(int y = 0; y < bestGuess.Height; y++)
+                {
+                    bestGuess.SetPixel(x, y, Color.Black);
+                }
+            }
             int bestScore = test(target, bestGuess);
             int count = 0;
             int saveCount = 0;
-            while (bestScore != 0 && saveCount < 50)
+            while (bestScore != 0 && saveCount < 20)
             {
                 //Only print every PRINT_EVERY_X iterations
                 if (count % PRINT_EVERY_X == 0)
                 {
                     Console.WriteLine(String.Format("The best score is: {0}", bestScore));
-                    bestGuess.Save(string.Format(saveImageLocationFormat, saveCount));
+                    bestGuess.Save(string.Format(saveImageLocationFormat, saveCount.ToString(numberFmt)));
                     saveCount++;
                     count = 1;
                 }
